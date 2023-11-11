@@ -1,21 +1,69 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import "./homeStyle.css";
 
 export default function Home() {
   const [written, setWritten] = useState("");
   const [collection, setCollection] = useState([]);
+  const apiUrl = 'https://654fb41a358230d8f0cda1a4.mockapi.io/notes'
 
   function handlerAddWritten(event) {
-    event.preventDefault();
+    
     setWritten(event.target.value);
   }
-  function handlerAddNote() {
-    const UpdateCollection = [...collection, written];
-    setCollection(UpdateCollection);
-    setWritten(""); //reset
-    console.log(written);
+  async function handlerAddNote() {
+    const updatedCollection = [...collection, written];
+    setCollection(updatedCollection);
+    setWritten(""); // Reset
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          note: written}),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Optionally, handle the response data if needed
+      const responseData = await response.json();
+      console.log("POST response:", responseData);
+      // Fetch updated data after posting
+      fetchData();
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
   }
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      // const data = JSON.stringify(await response.json()); //utk liat data dalam, harus di-stringify
+      const data = await response.json();
+      //ingat selalu untuk .map() dalam objects of array
+      const notes = data.map(item => item.note)
+      if(typeof notes === typeof collection) {
+        setCollection(notes)
+      }
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    // Fetch data when the component mounts
+    fetchData();
+  }, []);
+
+
 
   return (
     <section>
@@ -42,7 +90,7 @@ export default function Home() {
               <div className="card-container">
                 <div className="header-card-wrapper">
                   <p className="truncate">{notes}</p>
-                </div>
+                </div>  
               </div>
             </li>
           ))}
