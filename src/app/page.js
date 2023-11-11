@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect} from "react";
 import "./homeStyle.css";
+import axios from "axios";
 
 export default function Home() {
   const [written, setWritten] = useState("");
@@ -17,24 +18,16 @@ export default function Home() {
     setWritten(""); // Reset
 
     try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          note: written}),
-      });
-
-      if (!response.ok) {
+      const response = await axios.post(apiUrl,{
+        note: written
+      })
+      if (response.status >= 200 && response.status < 300) {
+        console.log("POST response:", response.data);
+        // Fetch updated data after posting
+        fetchData();
+      } else {
         throw new Error("Network response was not ok");
       }
-
-      // Optionally, handle the response data if needed
-      const responseData = await response.json();
-      console.log("POST response:", responseData);
-      // Fetch updated data after posting
-      fetchData();
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -42,18 +35,13 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      const response = await axios.get(apiUrl);
+      const data = response.data;
+      const notes = data.map(item => item.note);
+
+      if (typeof notes === typeof collection) {
+        setCollection(notes);
       }
-      // const data = JSON.stringify(await response.json()); //utk liat data dalam, harus di-stringify
-      const data = await response.json();
-      //ingat selalu untuk .map() dalam objects of array
-      const notes = data.map(item => item.note)
-      if(typeof notes === typeof collection) {
-        setCollection(notes)
-      }
-      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
