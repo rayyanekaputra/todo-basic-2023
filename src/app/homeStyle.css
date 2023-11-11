@@ -8,15 +8,21 @@
     color: white;
 }
 
-section{
+body{
     background: #20252B;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+section{
+    padding-top: 120px;
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   row-gap: 24px;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
 
-
-    width: 100vw;
-    height: 100vh;
 }
 .card-container{
     display: flex;
@@ -47,6 +53,7 @@ p{
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 22.4px */
+    width: 100%;
 }
 .cta-card-wrapper{
     display: flex;
@@ -77,4 +84,16 @@ button{
     display: flex;
     flex-direction: column;
     row-gap: 8px;
+}
+
+.truncate {
+    text-align: left; /* Adjust the max-width as needed */
+    word-wrap: break-word;
+  }
+
+ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
 }
