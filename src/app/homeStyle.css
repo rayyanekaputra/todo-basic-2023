@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+    color: white;
+}
+
+section{
+    background: #20252B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    width: 100vw;
+    height: 100vh;
+}
+.card-container{
+    display: flex;
+    flex-direction: column;
+    width: 429px;
+    min-height: auto;
+    border-radius: 40px;
+    background: #333742;
+    padding: 40px;
+    row-gap: 24px;
+}
+
+h1{
+    color: #FFF;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 33.6px */
+}
+
+p{
+    opacity: 50%;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+}
+.cta-card-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 16px;
+}
+
+input{
+    border-style: none;
+    padding: 12px;
+    height: 60px;
+    border-radius: 16px;
+    background: #2C303B;
+}
+
+button{
+    border-style: none;
+    padding: 8px;
+    height: 60px;
+    border-radius: 16px;
+    background: #0271FE;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.header-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
